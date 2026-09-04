@@ -1,16 +1,23 @@
-# BYTE Exchange — High-Performance Order Matching Engine & Real-Time Trading Terminal
+<div align="center">
+  
+# 🚀 BYTE Exchange
+**High-Performance Order Matching Engine & Real-Time Trading Terminal**
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-4.21-lightgrey.svg)](https://expressjs.com/)
-[![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://react.dev/)
-[![SQLite](https://img.shields.io/badge/SQLite-WAL--Mode-blue.svg)](https://www.sqlite.org/)
-[![Vitest](https://img.shields.io/badge/Vitest-3.0-yellow.svg)](https://vitest.dev/)
-[![Deployment](https://img.shields.io/badge/Vercel%20%2B%20Render-Live-brightgreen.svg)](https://byte-nu.vercel.app)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.x-green.svg?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.21-lightgrey.svg?style=for-the-badge&logo=express)](https://expressjs.com/)
+[![React](https://img.shields.io/badge/React-18.3-61dafb.svg?style=for-the-badge&logo=react)](https://react.dev/)
+[![SQLite](https://img.shields.io/badge/SQLite-WAL_Mode-blue.svg?style=for-the-badge&logo=sqlite)](https://www.sqlite.org/)
+[![Vitest](https://img.shields.io/badge/Vitest-3.0-yellow.svg?style=for-the-badge&logo=vitest)](https://vitest.dev/)
 
 An interview-quality, production-grade **Order Matching Engine and Real-Time Trading Terminal** built for a fictional asset called **`BYTE`**.
 
-### 🔗 Live Production Links
+</div>
+
+---
+
+## 🔗 Live Production Links
+
 - **🌐 Live Trading Terminal**: [https://byte-nu.vercel.app](https://byte-nu.vercel.app)
 - **⚙️ Live Backend Service**: [https://byte-exchange-backend.onrender.com](https://byte-exchange-backend.onrender.com)
 
@@ -34,7 +41,7 @@ Designed and implemented following **Clean Architecture principles**, robust Pri
 #### ⚡ Trade Execution Rules
 - **Price-Time Priority (FIFO)**: High-priority matching based first on price advantage (highest bid / lowest ask), then strictly by arrival timestamp (FIFO) for orders at the same price level.
 - **Specification-Compliant Execution Price**: Trade execution price strictly records at the **maker order price** ($95$ in `BUY 100 vs SELL 95`), exactly adhering to ByteVox exchange matching rules.
-- **Partial Fills & Multi-Level Depth Sweeps**: Automatically splits orders when liquidity spans across multiple price levels (e.g., `BUY MARKET 8` against `SELL 100x5` + `SELL 110x5` $\rightarrow$ Executes 5 @ $100 and 3 @ $110).
+- **Partial Fills & Multi-Level Depth Sweeps**: Automatically splits orders when liquidity spans across multiple price levels.
 - **Order Cancellation**: Instant cancellation of resting open orders from in-memory engine and database (`DELETE /api/orders/:id`), releasing un-filled quantities cleanly.
 - **One-Click Engine Reset**: Full state purge feature (`POST /api/orders/reset`) resetting active orderbooks, trade history streams, and exchange statistics back to clean initial state.
 
@@ -43,51 +50,44 @@ Designed and implemented following **Clean Architecture principles**, robust Pri
 - **Real-Time WebSockets (`ws`)**: Instant event streaming (`ORDER_BOOK_UPDATE`, `TRADE_EXECUTED`, `STATS_UPDATE`) to connected frontend clients.
 
 ### 🎨 Trading Dashboard UI
-- **Modern Dark Trading Terminal**: Built with React 18 + Vite + TypeScript + TailwindCSS with custom stock market favicon (`📈`).
+- **Modern Dark Trading Terminal**: Built with React 18 + Vite + TypeScript + TailwindCSS.
 - **Visual Liquidity Depth Bars**: Orderbook columns dynamically visualize volume depth ratios per price level.
 - **Real-Time Trade Stream**: Live executed trade stream showing Price, Quantity, and Time (`HH:mm:ss`).
 - **Order Entry Panel**: Tabbed BUY/SELL selector, LIMIT/MARKET toggle, quick quantity presets (+1, +5, +10, +25, +50), estimated total calculation, and Zod error toast display.
 
 ### 🧪 Quality Assurance & Containerization
-- **50 Automated Vitest Unit Tests**: Complete 50-test regression suite covering 20 Limit Order tests and 20 Market Order tests including multi-level sweeps, partial fills, FIFO, price priority, and liquidity protections (**50/50 passed in <1s**).
+- **Automated Vitest Unit Tests**: Complete 50-test regression suite covering 20 Limit Order tests and 20 Market Order tests including multi-level sweeps, partial fills, FIFO, price priority, and liquidity protections (**50/50 passed in <1s**).
 - **Docker & Docker-Compose**: Production-ready multi-stage Docker builds for Express backend and Nginx-served frontend.
 
 ---
 
 ## 📁 Repository Directory Structure
 
-```
+```text
 BYTE/
 ├── backend/            # Express.js + TypeScript + SQLite Engine
 │   ├── src/
 │   │   ├── config/           # Environment & configuration loader
 │   │   ├── controllers/      # REST API request handlers
-│   │   ├── database/         # SQLite connection, schema & WAL mode initialization
-│   │   ├── matching-engine/  # Core Price-Time Priority Matching Engine
-│   │   ├── middlewares/      # Zod validation & centralized error handling
-│   │   ├── models/           # SQLite Data Repositories (prepared statements)
+│   │   ├── database/         # SQLite connection & schema
+│   │   ├── matching-engine/  # Price-Time Priority Matching Engine
+│   │   ├── middlewares/      # Zod validation & error handling
+│   │   ├── models/           # SQLite Data Repositories
 │   │   ├── routes/           # Express router endpoints
-│   │   ├── services/         # Business logic layer & engine bridge
-│   │   ├── types/            # Strict TypeScript domain interfaces
+│   │   ├── services/         # Business logic layer
+│   │   ├── types/            # TypeScript domain interfaces
 │   │   └── utils/            # Logger & helper utilities
-│   ├── tests/                # Vitest unit test suite (matchingEngine.test.ts)
-│   ├── Dockerfile
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/           # React 18 + Vite + TypeScript + TailwindCSS Dashboard
+│   └── tests/                # Vitest unit test suite
+├── frontend/           # React 18 + Vite + TypeScript + TailwindCSS
 │   ├── src/
-│   │   ├── components/       # UI Components (Navbar, StatsCards, OrderForm, OrderBook, etc.)
-│   │   ├── hooks/            # Custom Hooks (useWebSocket real-time sync)
-│   │   ├── pages/            # View Layouts (Dashboard)
-│   │   ├── services/         # Axios API client
-│   │   ├── types/            # Shared TypeScript types
-│   │   └── utils/            # Currency & time formatters
-│   ├── Dockerfile
-│   ├── package.json
-│   └── vite.config.ts
+│   │   ├── components/       # UI Components
+│   │   ├── hooks/            # Custom Hooks (useWebSocket)
+│   │   ├── pages/            # View Layouts
+│   │   ├── services/         # API client
+│   │   └── types/            # Shared types
 ├── docker-compose.yml  # Container orchestration
-├── design-decisions.md # Detailed technical decisions, complexity & scaling analysis
-├── architecture.md     # System architecture & Mermaid sequence diagrams
+├── design-decisions.md # Technical decisions & analysis
+├── architecture.md     # System architecture diagrams
 └── README.md           # Master project documentation
 ```
 
@@ -102,8 +102,8 @@ BYTE/
 ### 1. Setup Dependencies
 
 ```bash
-git clone https://github.com/rohit661199/BYTE.git
-cd BYTE
+git clone https://github.com/Anujdassat/byte.git
+cd byte
 
 # Install both backend and frontend dependencies
 npm run setup
@@ -150,20 +150,23 @@ cd backend
 npm test
 ```
 
-### Test Suite Output:
-```bash
- ✓ tests/matchingEngine.test.ts (8 tests) 72ms
-
- Test Files  1 passed (1)
-      Tests  8 passed (8)
-   Duration  1.69s
-```
-
 ---
 
 ## 📖 API Documentation
 
-### Base URL: `http://localhost:5000/api`
+**Base URL:** `http://localhost:5000/api`
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/orders` | `POST` | Submit a New Order (Limit/Market) |
+| `/orderbook` | `GET` | Get Order Book Depth |
+| `/trades?limit=50` | `GET` | Get Recent Trades |
+| `/stats` | `GET` | Get Exchange Statistics |
+| `/orders/:id` | `DELETE` | Cancel Order |
+| `/orders/reset` | `POST` | Reset Exchange Engine |
+
+<details>
+<summary><strong>View Example Requests & Responses</strong></summary>
 
 ### 1. Submit New Order (`POST /api/orders`)
 - **Limit Order Body**:
@@ -172,14 +175,6 @@ npm test
   "side": "BUY",
   "type": "LIMIT",
   "price": 100.00,
-  "quantity": 5
-}
-```
-- **Market Order Body**:
-```json
-{
-  "side": "BUY",
-  "type": "MARKET",
   "quantity": 5
 }
 ```
@@ -196,8 +191,7 @@ npm test
       "price": 100,
       "quantity": 5,
       "remainingQuantity": 5,
-      "status": "PENDING",
-      "createdAt": "2026-08-04T06:21:26.783Z"
+      "status": "PENDING"
     },
     "trades": []
   }
@@ -214,64 +208,12 @@ npm test
   }
 }
 ```
-
-### 3. Get Recent Trades (`GET /api/trades?limit=50`)
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": "trade_1785825166369_36881df4",
-      "buyOrderId": "buy_1785825166348_a3e2f8ef",
-      "sellOrderId": "sell_1785825166368_301df89f",
-      "price": 95,
-      "quantity": 3,
-      "timestamp": "2026-08-04T06:32:46.369Z"
-    }
-  ]
-}
-```
-
-### 4. Get Exchange Statistics (`GET /api/stats`)
-```json
-{
-  "success": true,
-  "data": {
-    "totalBuyOrders": 14,
-    "totalSellOrders": 12,
-    "totalTradesExecuted": 8,
-    "totalVolume": 3450.00
-  }
-}
-```
-
-### 5. Cancel Order (`DELETE /api/orders/:id`)
-```json
-{
-  "success": true,
-  "message": "Order cancelled successfully",
-  "data": {
-    "id": "buy_1785824486782_46ee677e",
-    "status": "CANCELLED"
-  }
-}
-```
-
-### 6. Reset Exchange Engine (`POST /api/orders/reset`)
-```json
-{
-  "success": true,
-  "message": "Exchange engine reset successfully"
-}
-```
+</details>
 
 ---
 
 ## 🚀 Scaling Strategy & Architectural Analysis
 
 For architectural design deep-dives, sequence diagrams, and throughput scaling analysis (scaling to **100,000 active orders** and **10,000 trades/minute**), refer to:
-- **[design-decisions.md](file:///c:/Users/rohit/OneDrive/Desktop/resumes/Projects%20copy/BYTE/design-decisions.md)**
-- **[architecture.md](file:///c:/Users/rohit/OneDrive/Desktop/resumes/Projects%20copy/BYTE/architecture.md)**
-#   b y t e  
- #   b y t e  
- 
+- 📄 **[Design Decisions](./design-decisions.md)**
+- 📐 **[System Architecture](./architecture.md)**
